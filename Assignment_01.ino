@@ -25,7 +25,7 @@ void loop() {
       break;
       
     case STATUS_PRESTART:
-
+      statusPreStart();
       break;
       
     case STATUS_SLEEPMODE:

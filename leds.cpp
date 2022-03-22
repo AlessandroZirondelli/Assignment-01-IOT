@@ -2,6 +2,9 @@
 #include "setup.h"
 #include "Arduino.h"
 
+long oldTimePulsing; //time of old pulsing led
+int fadeAmount=5;
+int currIntensity;
 int leds[]={L1,L2,L3,L4};
 
 void setupLed(){
@@ -16,5 +19,21 @@ void initLed(){
     digitalWrite(leds[cont],LOW);
   }
   analogWrite(LS,0);
+  oldTimePulsing=0;
+  currIntensity=0;
+}
+
+void pulsingLed(){
+  long currentTimePulsing = millis();
+  if (currentTimePulsing - oldTimePulsing >= 20) {//gestisce ogni quanto incrementare/decrementare il fading
+    oldTimePulsing = currentTimePulsing;
+    analogWrite(LS, currIntensity);
+    currIntensity = currIntensity + fadeAmount;
+    if (currIntensity == 0 || currIntensity == 255) {
+      fadeAmount = -fadeAmount ;
+    }
+  }
+
+  
   
 }

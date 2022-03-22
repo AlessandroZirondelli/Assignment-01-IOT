@@ -5,5 +5,7 @@
 void initLed();
 void setupLed();
 
+void pulsingLed();
+
 
 #endif
