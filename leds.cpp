@@ -3,7 +3,7 @@
 #include "Arduino.h"
 #include "timer_game.h"
 
-unsigned long oldTimePulsing;
+//unsigned long oldTimePulsing;
 
 int fadeAmount=5;
 int currIntensity;
@@ -24,7 +24,7 @@ void initLed(){
   currIntensity=0;
 }
 
-void pulsingLed(){
+/*void pulsingLed(){
     unsigned long currentTimePulsing = millis();
 
   if (currentTimePulsing - oldTimePulsing >= SPEED_PULSING) {//gestisce ogni quanto incrementare/decrementare il fading
@@ -35,9 +35,9 @@ void pulsingLed(){
       fadeAmount = -fadeAmount ;
     }
   }  
-}
+}*/
 
-/*
+
 void pulsingLed(){
   if (canPulsing()) {//gestisce ogni quanto incrementare/decrementare il fading
     analogWrite(LS, currIntensity);
@@ -46,4 +46,4 @@ void pulsingLed(){
       fadeAmount = -fadeAmount ;
     }
   }
-}*/
+}
