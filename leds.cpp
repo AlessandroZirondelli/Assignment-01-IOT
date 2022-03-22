@@ -24,19 +24,6 @@ void initLed(){
   currIntensity=0;
 }
 
-/*void pulsingLed(){
-    unsigned long currentTimePulsing = millis();
-
-  if (currentTimePulsing - oldTimePulsing >= SPEED_PULSING) {//gestisce ogni quanto incrementare/decrementare il fading
-    oldTimePulsing = currentTimePulsing;
-    analogWrite(LS, currIntensity);
-    currIntensity = currIntensity + fadeAmount;
-    if (currIntensity == 0 || currIntensity == 255) {
-      fadeAmount = -fadeAmount ;
-    }
-  }  
-}*/
-
 
 void pulsingLed(){
   if (canPulsing()) {//gestisce ogni quanto incrementare/decrementare il fading
