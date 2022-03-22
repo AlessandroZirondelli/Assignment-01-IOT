@@ -1,8 +1,10 @@
 #include "leds.h"
 #include "setup.h"
 #include "Arduino.h"
+#include "timer_game.h"
 
-long oldTimePulsing; //time of old pulsing led
+unsigned long oldTimePulsing;
+
 int fadeAmount=5;
 int currIntensity;
 int leds[]={L1,L2,L3,L4};
@@ -19,21 +21,29 @@ void initLed(){
     digitalWrite(leds[cont],LOW);
   }
   analogWrite(LS,0);
-  oldTimePulsing=0;
   currIntensity=0;
 }
 
 void pulsingLed(){
-  long currentTimePulsing = millis();
-  if (currentTimePulsing - oldTimePulsing >= 20) {//gestisce ogni quanto incrementare/decrementare il fading
+    unsigned long currentTimePulsing = millis();
+
+  if (currentTimePulsing - oldTimePulsing >= SPEED_PULSING) {//gestisce ogni quanto incrementare/decrementare il fading
     oldTimePulsing = currentTimePulsing;
     analogWrite(LS, currIntensity);
     currIntensity = currIntensity + fadeAmount;
     if (currIntensity == 0 || currIntensity == 255) {
       fadeAmount = -fadeAmount ;
     }
-  }
-
-  
-  
+  }  
 }
+
+/*
+void pulsingLed(){
+  if (canPulsing()) {//gestisce ogni quanto incrementare/decrementare il fading
+    analogWrite(LS, currIntensity);
+    currIntensity = currIntensity + fadeAmount;
+    if (currIntensity == 0 || currIntensity == 255) {
+      fadeAmount = -fadeAmount ;
+    }
+  }
+}*/

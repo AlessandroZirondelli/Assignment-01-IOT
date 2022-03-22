@@ -18,4 +18,6 @@ void statusBlinking();
 void statusWaitingInput();
 void statusGameOver();
 
+void sleeping();
+
 #endif

@@ -3,5 +3,7 @@
 
 void setupButtons();
 void pressedButton();
+void initButtons();
+int getPressedButtonPosition(); 
 
 #endif

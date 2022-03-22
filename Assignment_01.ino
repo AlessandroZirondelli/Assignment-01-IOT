@@ -29,7 +29,7 @@ void loop() {
       break;
       
     case STATUS_SLEEPMODE:
-
+       
       break;
       
     case STATUS_BLINKING:
