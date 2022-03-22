@@ -9,7 +9,7 @@
 
 
 // Potentiometer
-#define POT A0 
+#define POTPIN A0 
 
 // Led pulsing
 #define LS 11  

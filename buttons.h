@@ -2,5 +2,6 @@
 #define BUTTONS
 
 void setupButtons();
+void pressedButton();
 
 #endif
