@@ -2,7 +2,7 @@
 #include "setup.h"
 #include "Arduino.h"
 #include "timer_game.h"
-
+#include "status_game.h"
 
 //unsigned long oldTimePulsing;
 
@@ -10,7 +10,8 @@ int fadeAmount=5;
 int currIntensity;
 int leds[]={L1,L2,L3,L4};
 int dirBlinking = 1;
-int posBlinking = 0;
+int nextPos = 0;
+int actualPos = 0;
 void setupLed(){
   pinMode(L1,OUTPUT); 
   pinMode(L2,OUTPUT); 
@@ -25,6 +26,7 @@ void initLed(){
   analogWrite(LS,0);
   currIntensity=0;
   fadeAmount = 5;
+  
 }
 
 
@@ -39,27 +41,34 @@ void pulsingLed(){
   }
 }
 void initBlinking(){
-  posBlinking = 0;
+  speed_blinking = 500;
+  nextPos = 0;
   dirBlinking = 1;
 }
 void blinkingLeds(){
-  
-  if(canBlinking()){
-    Serial.println(posBlinking);
-    digitalWrite(leds[posBlinking],HIGH);
-  
-    if(dirBlinking == 1 && posBlinking == 0){ //
-      digitalWrite(leds[1],LOW);
-    }
-    else if(dirBlinking == -1 && posBlinking == 3){
-      digitalWrite(leds[2],LOW);
-    }
-    else{
-      digitalWrite(leds[posBlinking-dirBlinking],LOW);
-    }
-      posBlinking += dirBlinking;
-    if (posBlinking <= 0 || posBlinking >= 3){
-      dirBlinking = - dirBlinking; 
-    }
+
+  if(!canWaitingInput()){
+    if(canBlinking()){
+      actualPos = nextPos;
+      digitalWrite(leds[nextPos],HIGH);
+      if(dirBlinking == 1 && nextPos == 0){ //
+        digitalWrite(leds[1],LOW);
+      }
+      else if(dirBlinking == -1 && nextPos == 3){
+        digitalWrite(leds[2],LOW);
+      }
+      else{
+        digitalWrite(leds[nextPos-dirBlinking],LOW);
+      }
+        nextPos += dirBlinking;
+      if (nextPos <= 0 || nextPos >= 3){
+        dirBlinking =- dirBlinking; 
+      }
+    } 
+  } else{ 
+    game_status = STATUS_WAITINGINPUT;
+    Serial.print("Last pos led");
+    Serial.println(actualPos);
   }
+  
 }

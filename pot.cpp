@@ -12,4 +12,5 @@ void calculateFactorF(){ // choice diffult: max diffucult = calculatedPercentage
   float difficult = getDifficult();
   factor_F = (difficult * 50)/8;
   
+  
 }

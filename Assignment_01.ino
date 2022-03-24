@@ -27,6 +27,11 @@ void loop() {
     case STATUS_PRESTART:
       statusPreStart();
       break;
+      //Mettere un altro stato oppure fare var cycle
+
+    case STATUS_GAMING_SET:
+      statusGamingSet();
+      break;
       
     case STATUS_GAMING:
       statusGaming();

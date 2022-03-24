@@ -7,6 +7,7 @@ void setupLed();
 
 void pulsingLed();
 void blinkingLeds();
+void initBlinking();
 
 
 #endif

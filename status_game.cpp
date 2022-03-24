@@ -7,16 +7,16 @@
 #include <avr/sleep.h>
 #include <avr/power.h>
 #include "pot.h"
-
+#include "leds.h"
 int game_status;
 
 void statusInit(){
   initLed();
   initButtons();
   initTimerGame();
-  
-  Serial.print("buttonPressed");
-  Serial.println(pressedBtnPos);
+  initBlinking();
+  //Serial.print("buttonPressed");
+  //Serial.println(pressedBtnPos);
   Serial.println("Welcome to the Catch the Bouncing Led Ball Game. Press Key T1 to Start");
   game_status=STATUS_PRESTART;
 }
@@ -38,7 +38,7 @@ void sleeping(){
 void startGame(){
   if(pressedBtnPos==0 && game_status==STATUS_PRESTART){ // if BTN1 is pressed
      calculateFactorF();
-     game_status=STATUS_GAMING;
+     game_status=STATUS_GAMING_SET;
      analogWrite(LS,0);
   }
 }
@@ -51,4 +51,16 @@ void statusPreStart(){
 }
 void statusGaming(){
   blinkingLeds();
+}
+
+void statusGamingSet(){
+  speed_blinking = speed_blinking - (speed_blinking * (factor_F/100));
+  oldTimeWaitingInput = millis();
+  game_status=STATUS_GAMING;
+  
+}
+
+void statusWaitingInput(){
+  oldTimeWaitingInput = millis(); 
+  
 }
