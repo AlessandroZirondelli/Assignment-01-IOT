@@ -12,7 +12,7 @@
 #define POTPIN A0 
 
 // Led pulsing
-#define LS 11  
+#define LS 10
 
 // Led blinking
 #define L1 6

@@ -12,15 +12,14 @@ void initTimerGame(){
 
 bool canPulsing(){
   unsigned long currentTimePulsing = millis();
-  if (currentTimePulsing - oldTimePulsing >= SPEED_PULSING) {//gestisce ogni quanto incrementare/decrementare il fading
+  if ((currentTimePulsing - oldTimePulsing) >= SPEED_PULSING) {//gestisce ogni quanto incrementare/decrementare il fading
     oldTimePulsing = currentTimePulsing;
     return true;
   }
   return false;
+
 }
-void weakUp(){
- oldTimeSleeping = currentTimeSleeping;
-}
+
 bool canSleeping(){
   unsigned long currentTimeSleeping = millis();
   if (currentTimeSleeping - oldTimeSleeping >= T0) {

@@ -22,15 +22,27 @@ void initLed(){
   }
   analogWrite(LS,0);
   currIntensity=0;
+  fadeAmount = 5;
 }
 
 
 void pulsingLed(){
+  
   if (canPulsing()) {//gestisce ogni quanto incrementare/decrementare il fading
     analogWrite(LS, currIntensity);
+   /*Serial.print("curreny");
+    Serial.println(currIntensity);
+    Serial.print("delay");
+    Serial.println(fadeAmount);*/
     currIntensity = currIntensity + fadeAmount;
-    if (currIntensity == 0 || currIntensity == 255) {
+    if (currIntensity <= 0 || currIntensity >= 255) {
       fadeAmount = -fadeAmount ;
     }
   }
+  
+  /*
+  analogWrite(LS, HIGH);
+  delay(200);
+  analogWrite(LS, LOW);
+   delay(200);*/
 }

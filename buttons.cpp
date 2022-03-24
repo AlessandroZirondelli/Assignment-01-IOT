@@ -30,5 +30,5 @@ int getPressedButtonPosition(){
 
 
 void initButtons(){
-  pressedBtnPos=-1; 
+ // pressedBtnPos=-1; 
 }
