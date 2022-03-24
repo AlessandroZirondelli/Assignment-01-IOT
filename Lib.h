@@ -1,3 +1,3 @@
 
-void sleepGame();
+void  sleepGame();
 float randomT1();

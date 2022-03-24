@@ -28,12 +28,8 @@ void loop() {
       statusPreStart();
       break;
       
-    case STATUS_SLEEPMODE:
-       
-      break;
-      
-    case STATUS_BLINKING:
-
+    case STATUS_GAMING:
+      statusGaming();
       break;
       
     case STATUS_WAITINGINPUT:

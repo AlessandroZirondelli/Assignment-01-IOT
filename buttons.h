@@ -4,6 +4,7 @@
 void setupButtons();
 void pressedButton();
 void initButtons();
-int getPressedButtonPosition(); 
+int  getPressedButtonPosition(); 
 
+extern int pressedBtnPos;
 #endif
