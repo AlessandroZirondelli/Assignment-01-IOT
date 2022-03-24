@@ -46,9 +46,9 @@ void statusPreStart(){
   pulsingLed();
  
   sleeping();
-   startGame();
+  startGame();
   
 }
 void statusGaming(){
-  
+  blinkingLeds();
 }

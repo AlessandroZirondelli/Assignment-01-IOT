@@ -3,12 +3,14 @@
 #include "Arduino.h"
 #include "timer_game.h"
 
+
 //unsigned long oldTimePulsing;
 
 int fadeAmount=5;
 int currIntensity;
 int leds[]={L1,L2,L3,L4};
-
+int dirBlinking = 1;
+int posBlinking = 0;
 void setupLed(){
   pinMode(L1,OUTPUT); 
   pinMode(L2,OUTPUT); 
@@ -30,19 +32,34 @@ void pulsingLed(){
   
   if (canPulsing()) {//gestisce ogni quanto incrementare/decrementare il fading
     analogWrite(LS, currIntensity);
-   /*Serial.print("curreny");
-    Serial.println(currIntensity);
-    Serial.print("delay");
-    Serial.println(fadeAmount);*/
     currIntensity = currIntensity + fadeAmount;
     if (currIntensity <= 0 || currIntensity >= 255) {
       fadeAmount = -fadeAmount ;
     }
   }
+}
+void initBlinking(){
+  posBlinking = 0;
+  dirBlinking = 1;
+}
+void blinkingLeds(){
   
-  /*
-  analogWrite(LS, HIGH);
-  delay(200);
-  analogWrite(LS, LOW);
-   delay(200);*/
+  if(canBlinking()){
+    Serial.println(posBlinking);
+    digitalWrite(leds[posBlinking],HIGH);
+  
+    if(dirBlinking == 1 && posBlinking == 0){ //
+      digitalWrite(leds[1],LOW);
+    }
+    else if(dirBlinking == -1 && posBlinking == 3){
+      digitalWrite(leds[2],LOW);
+    }
+    else{
+      digitalWrite(leds[posBlinking-dirBlinking],LOW);
+    }
+      posBlinking += dirBlinking;
+    if (posBlinking <= 0 || posBlinking >= 3){
+      dirBlinking = - dirBlinking; 
+    }
+  }
 }
