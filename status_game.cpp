@@ -18,10 +18,8 @@ void statusInit(){
   initBlinking();
   score=0;
   Serial.println("Welcome to the Catch the Bouncing Led Ball Game. Press Key T1 to Start");
+  Serial.flush();
   game_status=STATUS_PRESTART;
-
-  Serial.print("score: ");
-  Serial.println(score);
 }
 
 void sleeping(){
@@ -30,9 +28,6 @@ void sleeping(){
       set_sleep_mode(SLEEP_MODE_PWR_DOWN);
       sleep_enable();
       sleep_mode();
-      /** The program will continue from here. **/
-      Serial.println("WAKE UP");
-      /* First thing to do is disable sleep. */
       sleep_disable();
       game_status=STATUS_INIT;      
   }
@@ -66,10 +61,6 @@ void statusGamingSet(){
   pressedBtnPos = -1;
   interrupts();
   game_status=STATUS_BLINKING;
-  Serial.print("speed: ");
-  Serial.println(speed_blinking);
-  Serial.print("T2: ");
-  Serial.println(T2);
 }
 
 bool isCorrectButton(){
@@ -87,6 +78,7 @@ void statusWaitingInput(){
     score++;
     Serial.print("New point! Score: ");
     Serial.println(score);
+    Serial.flush();
     game_status=STATUS_GAMING_SET;
   }
   else if(timeOut()){
@@ -94,6 +86,7 @@ void statusWaitingInput(){
     game_status=STATUS_GAMEOVER;  
     Serial.print("Game Over. Final Score:");  
     Serial.println(score);
+    Serial.flush();
     initLed();
   }
 }

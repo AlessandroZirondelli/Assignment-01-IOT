@@ -4,7 +4,6 @@
 unsigned long oldTimePulsing;
 unsigned long oldTimeSleeping;
 unsigned int speed_blinking;
-unsigned long currentTimeSleeping; //forse da togliere, nel senso che deve essere locale
 
 unsigned long oldTimeBlinking;
 unsigned long T1;
@@ -24,15 +23,8 @@ void initTimerGame(){
   randomSeed(seed);
   T1 = random(2000,10000);
   T2 = 10000; //user has 10 seconds to press the button
-  Serial.print("T1: ");
-  Serial.println(T1);
-  Serial.print("oldTimePulsing: ");
-  Serial.println(oldTimePulsing);
-  Serial.print("oldTimeSleeping: ");
-  Serial.println(oldTimeSleeping);
-  Serial.print("oldTimeNotBouncing: ");
-  Serial.println(oldTimeNotBouncing);
 }
+
 
 bool canPulsing(){
   unsigned long currentTimePulsing = millis();
@@ -76,24 +68,6 @@ bool canWaitingInput(){ // se possiamo passare dalla fase di blinking alla fase 
 bool timeOut(){ // tempo T2
   unsigned long currentTimeLastPos= millis(); 
   if(currentTimeLastPos - oldTimeLastPos > T2){
-    Serial.print("diff:");
-    Serial.println(currentTimeLastPos - oldTimeLastPos);
-
-    Serial.print("curremt :");
-    Serial.println(currentTimeLastPos);
-
-    
-    Serial.print("oldTimeLastPos:");
-    Serial.println(oldTimeLastPos);
-
-    Serial.print("T2:");
-    Serial.println(T2);
-    
-    Serial.print("T1:");
-    Serial.println(T1);
-
-    Serial.print("Speed:");
-    Serial.println(speed_blinking);
     return true;
   }
   return false;

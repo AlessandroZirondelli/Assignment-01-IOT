@@ -8,7 +8,7 @@
 extern unsigned int speed_blinking;
 extern unsigned long T1; // time after this the ball stop
 extern unsigned long T2; // time to press the button after the blinking
-extern unsigned long oldTimeSleeping; //forse da togliere, nel senso che deve essere locale
+extern unsigned long oldTimeSleeping; 
 extern unsigned long oldTimeWaitingInput; // finito T1 si può passare a fase successiva
 extern unsigned long oldTimeRestart;
 extern unsigned long oldTimeLastPos; // istante in cui l'ultimo led si ferma 
