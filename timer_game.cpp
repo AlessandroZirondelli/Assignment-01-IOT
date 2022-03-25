@@ -12,15 +12,26 @@ unsigned long T2;
 unsigned long oldTimeWaitingInput; //time when ball is stopped on the led 
 unsigned long oldTimeLastPos; 
 
+unsigned long oldTimeNotBouncing;
+unsigned long oldTimeRestart;
+
+
 void initTimerGame(){
   oldTimePulsing=millis();
   oldTimeSleeping=millis();
+  oldTimeNotBouncing = millis();
   unsigned long  seed = millis();
   randomSeed(seed);
   T1 = random(2000,10000);
   T2 = 10000; //user has 10 seconds to press the button
-  //Serial.println(analogRead(3));
-  //Serial.println(T1);
+  Serial.print("T1: ");
+  Serial.println(T1);
+  Serial.print("oldTimePulsing: ");
+  Serial.println(oldTimePulsing);
+  Serial.print("oldTimeSleeping: ");
+  Serial.println(oldTimeSleeping);
+  Serial.print("oldTimeNotBouncing: ");
+  Serial.println(oldTimeNotBouncing);
 }
 
 bool canPulsing(){
@@ -83,6 +94,25 @@ bool timeOut(){ // tempo T2
 
     Serial.print("Speed:");
     Serial.println(speed_blinking);
+    return true;
+  }
+  return false;
+}
+
+bool notBouncing(){
+  unsigned long currentTimeNotBouncing = millis();
+  if (currentTimeNotBouncing - oldTimeNotBouncing >= BOUNCING_TIME) {
+    oldTimeNotBouncing = currentTimeNotBouncing;
+    
+    return true;
+  }
+  return false;
+}
+bool canRestart(){
+  unsigned long currentTimeRestart= millis();
+  if (currentTimeRestart - oldTimeRestart >= WAIT_END_TIME) {
+    oldTimeRestart = currentTimeRestart;
+    
     return true;
   }
   return false;

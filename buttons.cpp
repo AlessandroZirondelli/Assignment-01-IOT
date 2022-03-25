@@ -4,6 +4,7 @@
 #include "setup.h"
 #include "Arduino.h"
 #include "status_game.h"
+#include "timer_game.h"
 
 int buttons[]={BT1,BT2,BT3,BT4};
 int pressedBtnPos; //se non preme nulla
@@ -17,8 +18,11 @@ void setupButtons(){
 }
 
 void pressedButton(){ //ISR
-  if(game_status==STATUS_WAITINGINPUT || game_status==STATUS_PRESTART ){
-    pressedBtnPos=getPressedButtonPosition(); // set pressed button
+  
+  if(notBouncing()){
+    if(game_status==STATUS_WAITINGINPUT || game_status==STATUS_PRESTART ){
+      pressedBtnPos=getPressedButtonPosition(); // set pressed button
+    }
   }
   
   
