@@ -4,7 +4,7 @@
 #include "timer_game.h"
 #include "status_game.h"
 
-//unsigned long oldTimePulsing;
+
 
 int fadeAmount=5;
 int currIntensity;
@@ -12,6 +12,7 @@ int leds[]={L1,L2,L3,L4};
 int dirBlinking = 1;
 int nextPos = 0;
 int actualPos = 0;
+
 void setupLed(){
   pinMode(L1,OUTPUT); 
   pinMode(L2,OUTPUT); 
@@ -47,8 +48,8 @@ void initBlinking(){
 }
 void blinkingLeds(){
 
-  if(!canWaitingInput()){
-    if(canBlinking()){
+  if(!canWaitingInput()){ // confrontare se il tempo T1 è finito e se posso poassare alla fase successiva
+    if(canBlinking()){// confronta la speed per vedere se posso accendere prossimo led
       actualPos = nextPos;
       digitalWrite(leds[nextPos],HIGH);
       if(dirBlinking == 1 && nextPos == 0){ //
@@ -65,10 +66,10 @@ void blinkingLeds(){
         dirBlinking =- dirBlinking; 
       }
     } 
-  } else{ 
+  } else{ //passaggio di stato a waiting input
+    oldTimeLastPos = millis(); //settiamo il timer quando il led si ferma
     game_status = STATUS_WAITINGINPUT;
-    Serial.print("Last pos led");
-    Serial.println(actualPos);
+     
   }
   
 }

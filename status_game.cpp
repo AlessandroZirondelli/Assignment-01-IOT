@@ -9,14 +9,14 @@
 #include "pot.h"
 #include "leds.h"
 int game_status;
+int score;
 
 void statusInit(){
   initLed();
   initButtons();
   initTimerGame();
   initBlinking();
-  //Serial.print("buttonPressed");
-  //Serial.println(pressedBtnPos);
+  score=0;
   Serial.println("Welcome to the Catch the Bouncing Led Ball Game. Press Key T1 to Start");
   game_status=STATUS_PRESTART;
 }
@@ -31,12 +31,14 @@ void sleeping(){
       Serial.println("WAKE UP");
       /* First thing to do is disable sleep. */
       sleep_disable();
-      //pressedBtnPos=-1;
       game_status=STATUS_INIT;      
   }
 }
 void startGame(){
-  if(pressedBtnPos==0 && game_status==STATUS_PRESTART){ // if BTN1 is pressed
+  noInterrupts();
+  int currentBtnPos = pressedBtnPos;
+  interrupts();
+  if(currentBtnPos==0 && game_status==STATUS_PRESTART){ // if BTN1 is pressed
      calculateFactorF();
      game_status=STATUS_GAMING_SET;
      analogWrite(LS,0);
@@ -55,12 +57,39 @@ void statusGaming(){
 
 void statusGamingSet(){
   speed_blinking = speed_blinking - (speed_blinking * (factor_F/100));
+  T2 = T2 - (T2 * (factor_F/100));
   oldTimeWaitingInput = millis();
-  game_status=STATUS_GAMING;
+  noInterrupts();
+  pressedBtnPos = -1;
+  interrupts();
+  game_status=STATUS_BLINKING;
+}
+
+bool isCorrectButton(){
+  
+  noInterrupts();
+  int currentPressedButton =  pressedBtnPos ; 
+  interrupts();
+  return  actualPos == currentPressedButton; 
+  
   
 }
 
 void statusWaitingInput(){
-  oldTimeWaitingInput = millis(); 
+  if(!timeOut() && isCorrectButton()){ // se il tempo non è scaduto
+    score++;
+    Serial.print("New point! Score: ");
+    Serial.println(score);
+    game_status=STATUS_GAMING_SET;
+  }
+  else if(timeOut()){
+    game_status=STATUS_GAMEOVER;  
+  }
+}
+
+void statusGameOver(){
+  Serial.print("Game Over. Final Score:");  
+  Serial.println(score);
+  game_status=STATUS_INIT;
   
 }

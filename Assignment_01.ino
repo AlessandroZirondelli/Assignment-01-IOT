@@ -33,16 +33,16 @@ void loop() {
       statusGamingSet();
       break;
       
-    case STATUS_GAMING:
+    case STATUS_BLINKING:
       statusGaming();
       break;
       
     case STATUS_WAITINGINPUT:
-
+      statusWaitingInput();
       break;
       
     case STATUS_GAMEOVER:
-
+      statusGameOver();
       break;
   }
   

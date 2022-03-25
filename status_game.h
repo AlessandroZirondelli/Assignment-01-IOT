@@ -5,23 +5,26 @@
 #define STATUS_INIT           0
 #define STATUS_PRESTART       1
 #define STATUS_GAMING_SET     2
-#define STATUS_GAMING         3 //blinking
+#define STATUS_BLINKING        3 //blinking
 #define STATUS_WAITINGINPUT   4
 #define STATUS_GAMEOVER       5
 
 extern int game_status;
+extern int score;
 
 void statusInit();
 void statusPreStart();
 void statusSleepMode();
 void statusGaming();
-void statusWaitingInput();
+void statusWaitingInput(); 
 void statusGameOver();
 void statusGamingSet();
 
 
 void sleeping();
 void startGame();
+bool isCorrectButton();
+
 
 
 #endif
