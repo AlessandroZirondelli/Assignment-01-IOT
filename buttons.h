@@ -6,5 +6,5 @@ void pressedButton();
 void initButtons();
 int  getPressedButtonPosition(); 
 
-extern int pressedBtnPos;
+extern volatile int pressedBtnPos;
 #endif

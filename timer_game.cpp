@@ -25,47 +25,33 @@ void initTimerGame(){
   T2 = 10000; //user has 10 seconds to press the button
 }
 
-
-bool canPulsing(){
-  unsigned long currentTimePulsing = millis();
-  if ((currentTimePulsing - oldTimePulsing) >= SPEED_PULSING) {//gestisce ogni quanto incrementare/decrementare il fading
-    oldTimePulsing = currentTimePulsing;
+bool can(unsigned long *oldTime, unsigned long comparator){
+  unsigned long currentTime=millis();
+  if((currentTime-(*oldTime)) >= comparator){
+    *oldTime = currentTime;
     return true;
   }
   return false;
+}
+
+bool canPulsing(){
+  return can(&oldTimePulsing,SPEED_PULSING);
 
 }
 
 bool canSleeping(){
-  unsigned long currentTimeSleeping = millis();
-  if (currentTimeSleeping - oldTimeSleeping >= T0) {
-    oldTimeSleeping = currentTimeSleeping;
-    
-    return true;
-  }
-  return false;
+  return can(&oldTimeSleeping,T0);
 }
 
 bool canBlinking(){
-  unsigned long currentTimeBlinking = millis();
-  if (currentTimeBlinking - oldTimeBlinking >= speed_blinking ) { //deve esseree moltiplicato speedblinking per %
-    oldTimeBlinking = currentTimeBlinking;
-    return true;
-  }
-  return false;
+  return can(&oldTimeBlinking,speed_blinking );
 }
 
-bool canWaitingInput(){ // se possiamo passare dalla fase di blinking alla fase di LED fermo
-  unsigned long currentTimeWaitingInput = millis();
-  if (currentTimeWaitingInput - oldTimeWaitingInput >= T1) {
-    oldTimeWaitingInput = currentTimeWaitingInput;
-    
-    return true;
-  }
-  return false;
+bool canWaitingInput(){ // if we can switch to wainting input phase, where led is stopped
+  return can(&oldTimeWaitingInput, T1);
 }
 
-bool timeOut(){ // tempo T2
+bool timeOut(){ // checks T2
   unsigned long currentTimeLastPos= millis(); 
   if(currentTimeLastPos - oldTimeLastPos > T2){
     return true;
@@ -74,20 +60,9 @@ bool timeOut(){ // tempo T2
 }
 
 bool notBouncing(){
-  unsigned long currentTimeNotBouncing = millis();
-  if (currentTimeNotBouncing - oldTimeNotBouncing >= BOUNCING_TIME) {
-    oldTimeNotBouncing = currentTimeNotBouncing;
-    
-    return true;
-  }
-  return false;
+  return can(&oldTimeNotBouncing, BOUNCING_TIME);
 }
 bool canRestart(){
-  unsigned long currentTimeRestart= millis();
-  if (currentTimeRestart - oldTimeRestart >= WAIT_END_TIME) {
-    oldTimeRestart = currentTimeRestart;
-    
-    return true;
-  }
-  return false;
+  return can(&oldTimeRestart, WAIT_END_TIME);
+  
 }

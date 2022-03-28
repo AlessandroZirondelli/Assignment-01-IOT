@@ -1,5 +1,15 @@
-//PIN 2 E 3 PER INTERRUPT
-//PIN 3,5,6,9,10,11 PWM
+/* 
+#Assignment 01
+
+Authors:
+Arianna Pagano
+Lorenzo Sansone
+Alessandro Zirondelli
+
+Date:
+30/03/2022
+
+*/
 #include <avr/sleep.h>
 #include "TimerOne.h"
 
@@ -16,8 +26,6 @@ void setup() {
   game_status = STATUS_INIT; 
 }
 
-  
-
 void loop() {
   switch(game_status){
     case STATUS_INIT:
@@ -27,7 +35,6 @@ void loop() {
     case STATUS_PRESTART:
       statusPreStart();
       break;
-      //Mettere un altro stato oppure fare var cycle
 
     case STATUS_GAMING_SET:
       statusGamingSet();

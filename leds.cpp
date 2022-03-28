@@ -8,10 +8,10 @@
 
 int fadeAmount=5;
 int currIntensity;
-int leds[]={L1,L2,L3,L4};
+byte leds[]={L1,L2,L3,L4};
 int dirBlinking = 1;
 int nextPos = 0;
-int actualPos = 0;
+byte actualPos = 0;
 
 void setupLed(){
   pinMode(L1,OUTPUT); 
@@ -33,7 +33,7 @@ void initLed(){
 
 void pulsingLed(){
   
-  if (canPulsing()) {//gestisce ogni quanto incrementare/decrementare il fading
+  if (canPulsing()) {//manage time to increase and decrease  fading
     analogWrite(LS, currIntensity);
     currIntensity = currIntensity + fadeAmount;
     if (currIntensity <= 0 || currIntensity >= 255) {
@@ -48,11 +48,11 @@ void initBlinking(){
 }
 void blinkingLeds(){
 
-  if(!canWaitingInput()){ // confrontare se il tempo T1 è finito e se posso poassare alla fase successiva
-    if(canBlinking()){// confronta la speed per vedere se posso accendere prossimo led
+  if(!canWaitingInput()){ // check if T1 is over to skip next phase
+    if(canBlinking()){// check speed to turn on next led
       actualPos = nextPos;
       digitalWrite(leds[nextPos],HIGH);
-      if(dirBlinking == 1 && nextPos == 0){ //
+      if(dirBlinking == 1 && nextPos == 0){ 
         digitalWrite(leds[1],LOW);
       }
       else if(dirBlinking == -1 && nextPos == 3){
@@ -66,8 +66,8 @@ void blinkingLeds(){
         dirBlinking =- dirBlinking; 
       }
     } 
-  } else{ //passaggio di stato a waiting input
-    oldTimeLastPos = millis(); //settiamo il timer quando il led si ferma
+  } else{ //next phase is wainting input
+    oldTimeLastPos = millis(); //set the timer when led stops
     game_status = STATUS_WAITINGINPUT;
      
   }

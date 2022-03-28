@@ -6,8 +6,8 @@
 #include "status_game.h"
 #include "timer_game.h"
 
-int buttons[]={BT1,BT2,BT3,BT4};
-int pressedBtnPos; //se non preme nulla
+byte buttons[]={BT1,BT2,BT3,BT4};
+volatile int pressedBtnPos; 
 int status_game;
 
 void setupButtons(){
@@ -40,6 +40,6 @@ int getPressedButtonPosition(){
 
 void initButtons(){
   noInterrupts();
- pressedBtnPos=-1; 
- interrupts();
+  pressedBtnPos=-1; 
+  interrupts();
 }

@@ -36,7 +36,7 @@ void startGame(){
   noInterrupts();
   int currentBtnPos = pressedBtnPos;
   interrupts();
-  if(currentBtnPos==0 && game_status==STATUS_PRESTART){ // if BTN1 is pressed
+  if(currentBtnPos==0 && game_status==STATUS_PRESTART){ // if BTN1 is pressed and user is pre-game
      calculateFactorF();
      game_status=STATUS_GAMING_SET;
      analogWrite(LS,0);
@@ -54,8 +54,8 @@ void statusGaming(){
 }
 
 void statusGamingSet(){
-  speed_blinking = speed_blinking - (speed_blinking * (factor_F/100));
-  T2 = T2 - (T2 * (factor_F/100));
+  speed_blinking = speed_blinking - (speed_blinking * (factor_F/100)); //update T1 in each next level
+  T2 = T2 - (T2 * (factor_F/100)); //update T1 in each next level
   oldTimeWaitingInput = millis();
   noInterrupts();
   pressedBtnPos = -1;
@@ -74,7 +74,7 @@ bool isCorrectButton(){
 }
 
 void statusWaitingInput(){
-  if(!timeOut() && isCorrectButton()){ // se il tempo non è scaduto
+  if(!timeOut() && isCorrectButton()){ // if time isn't over
     score++;
     Serial.print("New point! Score: ");
     Serial.println(score);

@@ -1,8 +1,9 @@
 #ifndef POT
 #define POT
+#include "Arduino.h"
 extern float factor_F; 
 
-int getDifficult();
+byte getDifficult();
 void calculateFactorF();
 
 #endif

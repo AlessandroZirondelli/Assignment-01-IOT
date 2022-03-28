@@ -2,8 +2,9 @@
 #define LEDS 
 
 #define NUM_LED 4
+#include "Arduino.h"
 
-extern int actualPos;
+extern byte actualPos;
 void initLed();
 void setupLed();
 
